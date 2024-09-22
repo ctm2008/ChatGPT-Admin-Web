@@ -1,36 +1,58 @@
 {
   "name": "chatgpt-admin-web",
-  "version": "1.0.0",
-  "description": "ChatGPT web ui with user management and dashboard",
-  "keywords": [
-    "chatgpt",
-    "webui"
-  ],
-  "homepage": "https://github.com/AprilNEA/ChatGPT-Admin-Web",
-  "bugs": {
-    "url": "https://github.com/AprilNEA/ChatGPT-Admin-Web/issues",
-    "email": "github@sku.moe"
-  },
+  "version": "3.2.4",
+  "description": "ChatGPT Admin Web",
   "license": "MIT",
   "author": "AprilNEA <github@sku.moe> (https://sku.moe)",
-  "contributors": [
-    "Peron <peron_ap@icloud.com> (https://github.com/PeronGH)"
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AprilNEA/ChatGPT-Admin-Web"
   },
   "workspaces": [
     "apps/*",
-    "packages/*"
+    "packages/*",
+    "prisma"
   ],
   "scripts": {
     "build": "turbo run build",
+    "build:frontend": "turbo run build --filter frontend",
     "dev": "turbo run dev --parallel",
+    "start": "turbo run start",
     "lint": "turbo run lint",
-    "prettier": "prettier --write ."
+    "test": "vitest run",
+    "prettier": "prettier --write .",
+    "db:init": "prisma db push && prisma db seed",
+    "db:generate": "prisma generate"
   },
   "devDependencies": {
-    "turbo": "latest"
-  }
+    "@trivago/prettier-plugin-sort-imports": "latest",
+    "@types/node": "latest",
+    "prettier": "latest",
+    "prisma": "5.6.0",
+    "ts-node": "latest",
+    "turbo": "latest",
+    "typescript": "latest",
+    "vite": "^5.0.7",
+    "vite-tsconfig-paths": "^4.2.2",
+    "vitest": "^1.0.2",
+    "zod": "latest"
+  },
+  "prisma": {
+    "schema": "prisma/schema.prisma",
+    "seed": "ts-node prisma/seed.ts"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "pnpm": {
+    "overrides": {
+      "@liaoliaots/nestjs-redis>@nestjs/common": "^10.0.0",
+      "@liaoliaots/nestjs-redis>@nestjs/core": "^10.0.0",
+      "@liaoliaots/nestjs-redis>@nestjs/terminus": "^10.0.0"
+    },
+    "allowedDeprecatedVersions": {
+      "sourcemap-codec": "1.4.8"
+    }
+  },
+  "packageManager": "pnpm@8.6.3"
 }

@@ -1,55 +1,55 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "globalEnv": [
+    "DATABASE_URL",
+    "REDIS_URL"
+  ],
   "pipeline": {
     "db:generate": {
-      "cache": false
+      "dependsOn": [
+        "^db:generate"
+      ],
+      "outputs": [
+        ".client/**"
+      ]
     },
-    "db:push": {
-      "cache": false
+    "frontend#build": {
+      "inputs": ["config.json"],
+      "dependsOn": [
+        "shared#build"
+      ],
+      "outputs": [
+        ".next/**",
+        "!.next/cache/**"
+      ]
     },
-    "build-docs": {
-      "dependsOn": ["^build-docs"]
+    "backend#build": {
+      "dependsOn": [
+        "db:generate",
+        "shared#build"
+      ],
+      "outputs": [
+        "dist/**"
+      ]
     },
     "build": {
+      "inputs": ["config.json"],
       "dependsOn": [
-        "^db:generate",
+        "db:generate",
         "^build"
       ],
       "outputs": [
         "dist/**",
         ".next/**",
         "!.next/cache/**"
-      ],
-      "env": [
-        "JWT_SECRET",
-        "NEXT_PUBLIC_TITLE",
-        "NEXT_PUBLIC_WECHAT_OA",
-        "REDIS_URL",
-        "REDIS_TOKEN",
-        "OPENAI_ENDPOINT",
-        "OPENAI_API_KEY",
-        "BING_COOKIE",
-        "DOMAIN",
-        "CALLBACK_DOMAIN",
-        "XUNHU_PAY_APPID",
-        "XUNHU_PAY_APPSECRET",
-        "NEXT_PUBLIC_EMAIL_SERVICE",
-        "MAILGUN_EMAIL_DOMAIN",
-        "MAILGUN_EMAIL_API_KEY",
-        "ELASTICE_EMAIL_API_KEY",
-        "ELASTICE_EMAIL_SENDER",
-        "SMS_ACCESS_KEY_ID",
-        "TEXT_SECURITY",
-        "TENCENT_SECRETID",
-        "TENCENT_SECRETKEY",
-        "BAIDU_APIKEY",
-        "BAIDU_SECRETKEY",
-        "EDGE_CONFIG"
       ]
     },
-    "test": {
+    "//#test": {
+      "dependsOn": []
+    },
+    "start": {
       "dependsOn": [
-        "^test"
+        "^start"
       ]
     },
     "dev": {

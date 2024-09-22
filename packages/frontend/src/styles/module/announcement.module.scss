@@ -1,0 +1,43 @@
+@import "../window";
+
+.announcement {
+    padding: 20px;
+    overflow: auto;
+    width: 800px;
+    margin: 0 auto;
+
+    .announcement-coloum:not(:last-child) {
+        margin-bottom: 20px;
+    }
+
+    .announce-body {
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        width: 100%;
+        
+        .announcement-date {
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 200;
+            margin-bottom: 5px;
+        }
+
+        .title {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+    }
+}
+
+@media only screen and (max-width: 1140px) {
+    .announcement {
+      width: calc(100% - 40px);
+    }
+}
